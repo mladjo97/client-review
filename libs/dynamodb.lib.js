@@ -1,5 +1,5 @@
 import aws from 'aws-sdk';
-import config from '../config';
+import config from '../config'; // note: add aliases?
 
 const dynamoDb = new aws.DynamoDB.DocumentClient({ apiVersion: '2012-08-10' });
 

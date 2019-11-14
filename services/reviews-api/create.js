@@ -1,7 +1,7 @@
 import uuid from 'uuid/v4';
 import fetch from 'node-fetch';
 import jwt from 'jsonwebtoken';
-// import jwkToPem from 'jwk-to-pem';
+//import jwkToPem from 'jwk-to-pem';
 
 import config from '../../config';
 import * as dynamoDb from '../../libs/dynamodb.lib';
@@ -9,14 +9,21 @@ import { ok, internalServerError, badRequest } from '../../libs/response.lib';
 
 export const main = async (event) => {
   const token = event.headers.Authorization;
-  const pem = await getPem();
-  const decoded = await jwt.verify(token, pem, { algorithms: ['RS256'] }, (err, decoded) => {
-    if (err) console.log(err);
-    else return decoded;
-  });
 
-  if (!decoded)
-    return badRequest('Not a valid token.');
+  // when there is no auth token, it doesn't get through apigateway
+  if (!token)
+    return badRequest('No auth token was found.');
+
+  try {
+    const pem = await getPem(config.region, config.userPoolId);
+    const decoded = await jwt.verify(token, pem, { algorithms: ['RS256'] });
+
+    if (!decoded)
+      return badRequest('Not a valid token.');
+  } catch (err) {
+    console.log(err);
+    return internalServerError(err.message);
+  }
 
   const { review, rating } = JSON.parse(event.body);
 
@@ -42,9 +49,7 @@ export const main = async (event) => {
 
 };
 
-const getPem = async () => {
-  // hide this
-  const jwkUrl = `https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_6MS3c6Wqc/.well-known/jwks.json`;
-
+const getPem = async (region, userPoolId) => {
+  const jwkUrl = `https://cognito-idp.${region}.amazonaws.com/${userPoolId}/.well-known/jwks.json`;
   return await fetch(jwkUrl).then(res => console.log(res.json()));
 }

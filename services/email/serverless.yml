@@ -17,6 +17,7 @@ provider:
   stage: dev
   region: eu-central-1
 
+  # better practice: roles per function
   iamRoleStatements:
     - Effect: Allow
       Action: 
