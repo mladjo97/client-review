@@ -1,0 +1,13 @@
+Resources:
+  ApiGatewayAuthorizer:
+      DependsOn:
+        - ApiGatewayRestApi
+      Type: AWS::ApiGateway::Authorizer
+      Properties:
+        Name: cognito-authorizer
+        IdentitySource: method.request.header.Authorization
+        RestApiId:
+          'Fn::ImportValue': ${self:custom.stage}-ApiGatewayRestApiId
+        Type: COGNITO_USER_POOLS
+        ProviderARNs:
+          - 'Fn::ImportValue': ${self:custom.stage}-UserPoolArn

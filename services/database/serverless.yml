@@ -1,0 +1,42 @@
+service: client-review-database
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  tableName: ${self:custom.stage}-reviews
+
+provider:
+  name: aws
+  stage: dev
+  region: eu-central-1
+
+resources:
+  Resources:
+    ReviewsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableName}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+
+  Outputs:
+    ReviewsTableArn:
+      Value:
+         Fn::GetAtt:
+          - ReviewsTable
+          - Arn
+      Export:
+        Name: ${self:custom.stage}-ReviewsTableArn
+    ReviewsTableStreamArn:
+      Value:
+         Fn::GetAtt:
+          - ReviewsTable
+          - StreamArn
+      Export:
+        Name: ${self:custom.stage}-ReviewsTableStreamArn

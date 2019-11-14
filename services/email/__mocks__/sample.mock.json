@@ -1,0 +1,14 @@
+{
+  "Records": [
+    {
+      "eventName": "INSERT",
+      "dynamodb": {
+        "NewImage": {
+          "id": "test-1234-id",
+          "review": "Awesome job on these tests!",
+          "rating": 5
+        }
+      }
+    }
+  ]
+}

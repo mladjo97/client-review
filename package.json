@@ -1,0 +1,16 @@
+{
+  "name": "client-review",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mladen Milosevic",
+  "license": "ISC",
+  "devDependencies": {
+    "aws-sdk": "^2.564.0",
+    "serverless-bundle": "^1.2.5",
+    "serverless-offline": "^5.12.0"
+  }
+}

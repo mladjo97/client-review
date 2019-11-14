@@ -1,0 +1,66 @@
+service: reviews-api
+
+plugins:
+  - serverless-bundle
+  - serverless-offline
+
+custom: ${file(../../serverless.common.yml):custom}
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: dev
+  region: eu-central-1
+
+  environment:
+    stage: ${self:custom.stage}
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action: 
+        - dynamodb:Scan
+        - dynamodb:PutItem
+      Resource:
+        - 'Fn::ImportValue': ${self:custom.stage}-ReviewsTableArn
+
+functions:
+  create:
+    handler: create.main
+    events:
+      - http:
+          path: reviews
+          method: post
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
+  list:
+    handler: get.getAll
+    events:
+      - http:
+          path: reviews
+          method: get
+          cors: true
+          authorizers: aws_iam
+resources:
+  - ${file(resources/api-gateway-errors.yml)}
+  - ${file(resources/cognito-authorizer.yml)}
+
+  - Outputs:
+      ApiGatewayRestApiId:
+        Value:
+          Ref: ApiGatewayRestApi
+        Export:
+          Name: ${self:custom.stage}-ApiGatewayRestApiId
+      
+      ApiGatewayRestApiRootResourceId:
+        Value:
+          Fn::GetAtt:
+            - ApiGatewayRestApi
+            - RootResourceId
+        Export:
+          Name: ${self:custom.stage}-ApiGatewayRestApiRootResourceId
