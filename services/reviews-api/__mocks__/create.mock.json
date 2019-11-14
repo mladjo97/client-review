@@ -1,6 +1,6 @@
 {
   "body": "{\"review\":\"Superb job. Well done!\", \"rating\":5 }",
   "headers": {
-    "Authorization": "jwt token from Cognito"
+    "Authorization": "valid jwt token here"
   }
 }
