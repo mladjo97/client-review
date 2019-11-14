@@ -17,7 +17,7 @@ provider:
   stage: dev
   region: eu-central-1
 
-  # better practice: roles per function
+  # best practice: roles per function
   iamRoleStatements:
     - Effect: Allow
       Action: 
@@ -43,6 +43,7 @@ provider:
     restApiRootResourceId:
       'Fn::ImportValue': ${self:custom.stage}-ApiGatewayRestApiRootResourceId
 
+# best practice: exclude/include per function
 functions:
   notify:
     handler: handler.notify
