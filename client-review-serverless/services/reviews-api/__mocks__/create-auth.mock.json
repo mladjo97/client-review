@@ -1,6 +1,6 @@
 {
   "body": "{\"review\":\"Superb job. Well done!\", \"rating\":5 }",
   "headers": {
-    "Authorization": "awrrrr"
+    "Authorization": "insert valid token here"
   }
 }

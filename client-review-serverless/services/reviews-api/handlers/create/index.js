@@ -1,9 +1,8 @@
-import decoder from './jwtDecoder';
-import dynamoDb from '../../../../libs'; // note: aliases
+import { decode } from './jwtDecoder';
+import * as dynamoDb from '../../../../libs/dynamodb.lib'; // note: aliases
 import create from './create';
 
-const handler = async (event) => {
-  return create(event, dynamoDb, decoder);
+export const handler = async (event) => {
+  return create(event, dynamoDb, decode);
 };
 
-export default handler;

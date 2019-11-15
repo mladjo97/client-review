@@ -11,6 +11,7 @@ import validMock from '../__mocks__/create-valid.mock.json';
 import { 
   ok,
   badRequest,
+  notAuthorized,
   internalServerError 
 } from '../../../libs/response.lib';
 
@@ -29,7 +30,7 @@ test("create - no auth token returns bad request", async () => {
 
 test("create - bad auth token returns bad request", async () => {
   
-  const expected = badRequest('not so important?');
+  const expected = notAuthorized('not so important?');
   
   const result = await create(authTokenMock, callGood, decodeBad);
 

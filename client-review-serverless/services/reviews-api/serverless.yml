@@ -29,7 +29,7 @@ provider:
 
 functions:
   create:
-    handler: handlers/index.handler
+    handler: handlers/create/index.handler
     events:
       - http:
           path: reviews
