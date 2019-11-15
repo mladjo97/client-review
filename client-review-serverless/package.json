@@ -11,6 +11,7 @@
   "devDependencies": {
     "aws-sdk": "^2.564.0",
     "serverless-bundle": "^1.2.5",
+    "serverless-mocha-plugin": "^1.11.0",
     "serverless-offline": "^5.12.0"
   }
 }

@@ -3,6 +3,7 @@ service: reviews-api
 plugins:
   - serverless-bundle
   - serverless-offline
+  - serverless-mocha-plugin
 
 custom: ${file(../../serverless.common.yml):custom}
 
@@ -28,7 +29,7 @@ provider:
 
 functions:
   create:
-    handler: create.main
+    handler: handlers/index.handler
     events:
       - http:
           path: reviews

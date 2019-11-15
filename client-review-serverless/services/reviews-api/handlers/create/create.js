@@ -1,30 +1,28 @@
 import uuid from 'uuid/v4';
-import fetch from 'node-fetch';
-import jwt from 'jsonwebtoken';
-import jwkToPem from 'jwk-to-pem';
 
-import config from '../../config';
-import * as dynamoDb from '../../libs/dynamodb.lib';
-import { ok, internalServerError, badRequest } from '../../libs/response.lib';
+import config from '../../../../config';
+import {
+  ok,
+  internalServerError,
+  badRequest
+} from '../../../../libs/response.lib';
 
-export const main = async (event) => {
 
+const create = async (event, database, jwtDecoder) => {
   // kad nema dobar token u auth headeru onda uopste ne prodje apigateway
   // ali ovde ispod sam eksperimentisao sa parsiranjem tokena, jer je u
   // aws-u to malo drugacije nego inace
-  const token = event.headers.Authorization;
+  const { Authorization: token } = event.headers;
 
   if (!token)
     return badRequest('No auth token was found.');
 
   try {
-    const pKey = await getPem(config.region, config.userPoolId);
-    const decoded = await jwt.verify(token, pKey, { algorithms: ['RS256'] });
+    const decoded = await jwtDecoder(token, config.region, config.userPoolId);
     // decoded sadrzi sad info o username, email itd.
     if (!decoded)
       return badRequest('Not a valid token.');
   } catch (err) {
-    console.log(err);
     return internalServerError(err.message);
   }
 
@@ -44,16 +42,12 @@ export const main = async (event) => {
   };
 
   try {
-    await dynamoDb.call('put', params);
+    await database.call('put', params);
     return ok(params.Item);
   } catch (err) {
-    console.log(err);
     return internalServerError(err.message);
   }
 
 };
 
-const getPem = async (region, userPoolId) => {
-  const jwkUrl = `https://cognito-idp.${region}.amazonaws.com/${userPoolId}/.well-known/jwks.json`;
-  return await fetch(jwkUrl).then(data => data.json()).then(json => jwkToPem(json.keys[1])).then(pem => pem);
-};
+export default create;
