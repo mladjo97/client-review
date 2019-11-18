@@ -5,4 +5,4 @@ export const callGood = (action, params) => {
   };
 };
 
-export const callError = (action, params) => new Error('oopsy daisy');
+export const callError = (action, params) => new Error('oopsy daisy')

@@ -1,0 +1,27 @@
+service: client-review-storage
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  tableName: ${self:custom.stage}-reviews
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: dev
+  region: eu-central-1
+
+resources:
+  Resources:
+    ReviewsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.stage}-reviews-bucket
+  Outputs:
+     ReviewsBucketArn:
+        Description: "S3 Reviews Bucket ARN"
+        Value:
+          Fn::GetAtt:
+            - ReviewsBucket
+            - Arn
+        Export:
+          Name: ${self:custom.stage}-ReviewsBucketArn
