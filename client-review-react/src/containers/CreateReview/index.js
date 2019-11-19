@@ -27,7 +27,8 @@ class CreateReview extends Component {
       });
     };
 
-    reader.readAsDataURL(file);
+    if(file)
+      reader.readAsDataURL(file);
   };
 
   onSubmitHandler = (e) => {
