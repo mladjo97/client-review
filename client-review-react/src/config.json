@@ -1,0 +1,10 @@
+{
+  "api": { 
+    "invokeUrl": "https://lh5dd5f7mh.execute-api.eu-central-1.amazonaws.com/dev"
+  },
+   "cognito": {
+     "REGION": "eu-central-1",
+     "USER_POOL_ID": "eu-central-1_6MS3c6Wqc",
+     "APP_CLIENT_ID": "6rl8n33unm0vr1g4gv6ib3ohhl"
+   }
+}
