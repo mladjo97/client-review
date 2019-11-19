@@ -26,11 +26,11 @@ const create = async (event, database, jwtDecoder) => {
   const { review, rating } = JSON.parse(event.body);
 
   if (!review)
-    return badRequest('No review.');
-  
+    return badRequest('Review is missing.');
+
   if (!rating)
-    return badRequest('No rating.');
-  
+    return badRequest('Rating is missing.');
+
   const params = {
     TableName: config.reviewsTableName,
     Item: {
