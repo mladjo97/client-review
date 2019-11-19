@@ -1,6 +1,6 @@
 import uuid from 'uuid/v4';
+import config from '../../../../config'; //callback hell
 
-import config from '../../../../config';
 import {
   ok,
   badRequest,
@@ -11,7 +11,6 @@ import {
 
 const create = async (event, database, jwtDecoder) => {
   const { Authorization: token } = event.headers;
-
   if (!token)
     return badRequest('No auth token was found.');
 
@@ -20,14 +19,18 @@ const create = async (event, database, jwtDecoder) => {
     if (!decoded)
       return notAuthorized('Not a valid token.');
   } catch (err) {
+    console.log(err);
     return internalServerError(err.message);
   }
 
   const { review, rating } = JSON.parse(event.body);
 
-  if (!review || !rating)
-    return badRequest('No review or rating.');
-
+  if (!review)
+    return badRequest('No review.');
+  
+  if (!rating)
+    return badRequest('No rating.');
+  
   const params = {
     TableName: config.reviewsTableName,
     Item: {
@@ -41,6 +44,7 @@ const create = async (event, database, jwtDecoder) => {
     await database.call('put', params);
     return ok(params.Item);
   } catch (err) {
+    console.log(err);
     return internalServerError(err.message);
   }
 
