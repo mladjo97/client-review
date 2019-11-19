@@ -26,6 +26,14 @@ provider:
         - dynamodb:PutItem
       Resource:
         - 'Fn::ImportValue': ${self:custom.stage}-ReviewsTableArn
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:PutObjectAcl
+        - s3:GetObject
+        - s3:GetObjectAcl
+      Resource:
+        - Fn::Join: ["/", [Fn::ImportValue: "${self:custom.stage}-ReviewsBucketArn", "*"]]
 
 functions:
   create:

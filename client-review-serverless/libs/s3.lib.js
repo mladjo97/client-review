@@ -1,11 +1,22 @@
 import aws from 'aws-sdk';
 import config from '../config';
+import aclTypes from './aclTypes';
 
 const s3 = new aws.S3({ apiVersion: '2006-03-01' });
 
+export const putObject = (params) => {
+  console.log(`${config.stage}-${params.Bucket}`);
+  return s3.putObject({
+    ...params,
+    Bucket: `${config.stage}-${params.Bucket}`
+  }).promise();
+};
+
 export const call = (action, params) => {
+  console.log(`${config.stage}-${params.Bucket}`);
   return s3[action]({
     ...params,
-    TableName: `${config.stage}-${params.TableName}`
+    Bucket: `${config.stage}-${params.Bucket}`,
+    ACL: params.ACL || aclTypes.PRIVATE   // defaults to PRIVATE
   }).promise();
 };

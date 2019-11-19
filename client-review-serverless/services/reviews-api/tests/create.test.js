@@ -1,11 +1,13 @@
 import create from '../handlers/create/create';
 
-import { callGood, callError } from '../__mocks__/db.mock';
-import { decodeGood, decodeBad, decodeError } from '../__mocks__/decoder.mock';
+import * as dbMock from '../__mocks__/db.mock';
+import * as storageMock from '../__mocks__/storage.mock';
+import * as decoderMock from '../__mocks__/decoder.mock';
 import noAuthTokenMock from '../__mocks__/create-noauth.mock.json'; 
 import authTokenMock from '../__mocks__/create-auth.mock.json'; 
 import noRatingMock from '../__mocks__/create-norating.mock.json';
 import noReviewMock from '../__mocks__/create-noreview.mock.json';
+import imageMock from '../__mocks__/create-image.mock.json';
 import validMock from '../__mocks__/create-valid.mock.json';
 
 import { 
@@ -22,7 +24,7 @@ test("create - no auth token returns bad request", async () => {
   
   const expected = badRequest('No Auth token');
   
-  const result = await create(noAuthTokenMock, callGood, decodeGood);
+  const result = await create(noAuthTokenMock, dbMock.callGood, storageMock.callGood, decoderMock.decodeGood);
 
   expect(result).not.toBeUndefined();
   expect(result.statusCode).toEqual(expected.statusCode);
@@ -32,7 +34,7 @@ test("create - bad auth token returns bad request", async () => {
   
   const expected = notAuthorized('not so important?');
   
-  const result = await create(authTokenMock, callGood, decodeBad);
+  const result = await create(authTokenMock, dbMock.callGood, storageMock.callGood, decoderMock.decodeBad);
 
   expect(result).not.toBeUndefined();
   expect(result.statusCode).toEqual(expected.statusCode);
@@ -43,7 +45,7 @@ test("create - bad auth token returns internal server error", async () => {
   
   const expected = internalServerError('not so important?');
   
-  const result = await create(authTokenMock, callGood, decodeError);
+  const result = await create(authTokenMock, dbMock.callGood, storageMock.callGood, decoderMock.decodeError);
   
   expect(result).not.toBeUndefined();
   expect(result.statusCode).toEqual(expected.statusCode);
@@ -58,7 +60,7 @@ test("create - no review returns bad request", async () => {
   
   const expected = badRequest('not so important?');
 
-  const result = await create(noReviewMock, callGood, decodeGood);
+  const result = await create(noReviewMock, dbMock.callGood, storageMock.callGood, decoderMock.decodeGood);
 
   expect(result).not.toBeUndefined();
   expect(result.statusCode).toEqual(expected.statusCode);
@@ -68,7 +70,7 @@ test("create - no rating returns bad request", async () => {
   
   const expected = badRequest('not so important?');
   
-  const result = await create(noRatingMock, callGood, decodeGood);
+  const result = await create(noRatingMock, dbMock.callGood, storageMock.callGood, decoderMock.decodeGood);
 
   expect(result).not.toBeUndefined();
   expect(result.statusCode).toEqual(expected.statusCode);
@@ -78,7 +80,7 @@ test("create - valid request returns internal server error", async () => {
   
   const expected = ok(validMock.body);
   
-  const result = await create(validMock, callError, decodeGood);
+  const result = await create(validMock, dbMock.callError, storageMock.callGood, decoderMock.decodeGood);
 
   expect(result).not.toBeUndefined();
   expect(result.statusCode).toEqual(expected.statusCode);
@@ -88,7 +90,7 @@ test("create - valid request returns ok response", async () => {
   
   const expected = ok(validMock.body);
   
-  const result = await create(validMock, callGood, decodeGood);
+  const result = await create(validMock, dbMock.callGood, storageMock.callGood, decoderMock.decodeGood);
 
   expect(result).not.toBeUndefined();
   expect(result.statusCode).toEqual(expected.statusCode);

@@ -7,7 +7,11 @@ test("ok response - equal ", () => {
 
   const expected = {
     statusCode: 200,
-    body: JSON.stringify(message)
+    body: JSON.stringify(message),
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json'
+    }
   };
 
   const okResponse = ok(message);
@@ -22,7 +26,11 @@ test("ok response - status code not equal", () => {
 
   const expected = {
     statusCode: 201,
-    body: JSON.stringify(message)
+    body: JSON.stringify(message),
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json'
+    }
   };
 
   const okResponse = ok(message);
@@ -34,7 +42,11 @@ test("ok response - body not equal", () => {
 
   const expected = {
     statusCode: 200,
-    body: JSON.stringify(message)
+    body: JSON.stringify(message),
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json'
+    }
   };
 
   const okResponse = ok('OK');

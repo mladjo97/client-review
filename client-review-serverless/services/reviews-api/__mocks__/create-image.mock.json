@@ -1,5 +1,5 @@
 {
-  "body": "{\"review\":\"Superb job. Well done!\", \"rating\":5}",
+  "body": "{\"review\":\"Superb job. Well done!\", \"rating\":5}, \"image\":\"base64-test-data\"",
   "headers": {
     "Authorization": "eyJraWQiOiI4Z3FvWFR6dUFiZzdOXC9BY0NMOERVWDJBenhoXC9samN0MndmcVB0OFhqalk9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiI3MzMzZmRiYS01ZTY5LTQ2NzctOWRlNy01NWY1MWM5YTFlMTkiLCJhdWQiOiI2cmw4bjMzdW5tMHZyMWc0Z3Y2aWIzb2hobCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZXZlbnRfaWQiOiIxNmFlOTA0NS04Yzg1LTRmY2MtODkzMC1jYzViNTAzZjUwYjciLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTU3NDE1OTc2MSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmV1LWNlbnRyYWwtMS5hbWF6b25hd3MuY29tXC9ldS1jZW50cmFsLTFfNk1TM2M2V3FjIiwiY29nbml0bzp1c2VybmFtZSI6IjczMzNmZGJhLTVlNjktNDY3Ny05ZGU3LTU1ZjUxYzlhMWUxOSIsImV4cCI6MTU3NDE2MzM2MSwiaWF0IjoxNTc0MTU5NzYxLCJlbWFpbCI6Im1sZG5taWxvc2V2aWNAZ21haWwuY29tIn0.dJrP1wLmKDAsFfjK6asjzsfq5e0bQ14ic-ZM5bT11jq3ry-G0eQCbLDUMaVtgFm3JNnJdVcbCuShZQHKtNnCgG3pOja_eP2snT1rSbs7cY743YKag7wz5W3wTk2Gkrsq2OlxYI5ypjjjm-RX0qUvLbTAc6chvH_CEAxr8rJpYT71Z7xqcMq-NfiVk5jpqTGQX5jA_3bcCgSGeOZ3IuitKI1Mi3LZPT5kCVdde25pByj37buBfe_J8r_vR-8D90LHnMQJDguQX__Reay4mzFC74in628GJlCpYRl5eKo2GcpLJvGtT2816YToyhbtYpZxdigS1f0DCppgnve6yGAabw"
   }
