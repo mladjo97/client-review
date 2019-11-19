@@ -35,7 +35,7 @@ class Register extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <div className="center_div">
         <h1>Register</h1>
         <label>Email: </label>
         <input type="email" name="email" id="email" onChange={this.onInputChangeHandler} />
@@ -44,7 +44,7 @@ class Register extends Component {
         <input type="password" name="password" id="password" onChange={this.onInputChangeHandler} />
         <br/>
         <button onClick={this.onSubmitHandler}>Submit</button>
-      </React.Fragment>
+      </div>
     );
   };
 };

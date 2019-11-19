@@ -42,11 +42,11 @@ const create = async (event, database, storage, jwtDecoder) => {
       // https://i.kym-cdn.com/entries/icons/original/000/030/338/New.jpg
       const imageBuffer = Buffer.from(image.replace(/^data:image\/\w+;base64,/, ""), 'base64');
       const imageExtension = image.substring("data:image/".length, image.indexOf(";base64"));
-      const imageKey = `${decoded.sub}-${uuid()}.${imageExtension}`;
-      imageUrl = `https://${config.stage}-${config.imagesBucketName}.s3.${config.region}.amazonaws.com/${imageKey}`;
+      const imageKey = `${uuid()}.${imageExtension}`;
+      imageUrl = `https://${config.stage}-${config.imagesBucketName}.s3.${config.region}.amazonaws.com/${decoded.sub}/${imageKey}`;
 
       const imageParams = {
-        Bucket: config.imagesBucketName,
+        Bucket: `${config.imagesBucketName}/${decoded.sub}`,
         Key: imageKey,
         Body: imageBuffer,
         ContentEncoding: 'base64',
@@ -54,7 +54,7 @@ const create = async (event, database, storage, jwtDecoder) => {
         ACL: aclTypes.PUBLIC_READ   // setting the acl manually, by default it's private
       };
 
-      await storage.putObject(imageParams);
+      await storage.call('putObject', imageParams);
     } catch (err) {
       console.log(err);
       return internalServerError(err.message);

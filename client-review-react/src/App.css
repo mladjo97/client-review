@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background: orangered;
 }
 
 .center_div {
@@ -11,4 +12,5 @@
   left: 40%;
   padding: 10px 0 0 20px;
   background: lightgrey;
+  border: solid 1px;
 }
